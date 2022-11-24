@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  GeorgRinger\NewsSeo\:
+    resource: '../Classes/*'
+
+  GeorgRinger\NewsSeo\EventListener\NewsDetailActionEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'newsseo-newsdetailaction'
+        event: GeorgRinger\News\Event\NewsDetailActionEvent

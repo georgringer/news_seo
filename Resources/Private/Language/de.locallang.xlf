@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns:t3="http://typo3.org/schemas/xliff" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" target-language="de" original="" datatype="plaintext" date="2022-11-23T20:16:25+01:00">
+		<body>
+			<trans-unit id="tx_news_domain_model_news.no_index" resname="tx_news_domain_model_news.no_index">
+				<source>Index this article</source>
+				<target>Artikel indexieren</target>
+			</trans-unit>
+			<trans-unit id="tx_news_domain_model_news.no_follow" resname="tx_news_domain_model_news.no_follow">
+				<source>Follow this article</source>
+				<target>Artikel folgen</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

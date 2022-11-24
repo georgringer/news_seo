@@ -1,0 +1,40 @@
+{
+  "name": "georgringer/news-seo",
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "news",
+    "seo"
+  ],
+  "authors": [
+    {
+      "name": "Georg Ringer",
+      "role": "Developer",
+      "homepage": "https://ringer.it"
+    }
+  ],
+  "type": "typo3-cms-extension",
+  "description": "Additional SEO features for TYPO3 Extension news",
+  "license": [
+    "GPL-2.0-or-later"
+  ],
+  "require": {
+    "georgringer/news": "^8.6 || ^9 || ^10",
+    "typo3/cms-seo": "^10.4 || ^11.5 || ^12"
+  },
+  "autoload": {
+    "psr-4": {
+      "GeorgRinger\\NewsSeo\\": "Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "GeorgRinger\\NewsSeo\\Tests\\": "Tests"
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "news_seo"
+    }
+  }
+}
