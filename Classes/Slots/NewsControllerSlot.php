@@ -21,8 +21,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class NewsControllerSlot
 {
 
-    public function detailActionSlot($news): void
+    public function detailActionSlot($news = null): void
     {
+        if (!$news) {
+            return;
+        }
         /** @var News $news */
 
         $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);

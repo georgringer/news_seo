@@ -22,12 +22,13 @@ class NewsDetailActionEventListener
     {
         /** @var News $news */
         $news = $event->getAssignedValues()['newsItem'];
+        if ($news) {
+            $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
+            $noIndex = $news->isNoIndex() ? 'noindex' : 'index';
+            $noFollow = $news->isNoFollow() ? 'nofollow' : 'follow';
 
-        $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
-        $noIndex = $news->isNoIndex() ? 'noindex' : 'index';
-        $noFollow = $news->isNoFollow() ? 'nofollow' : 'follow';
-
-        $manager = $metaTagManagerRegistry->getManagerForProperty('robots');
-        $manager->addProperty('robots', implode(',', [$noIndex, $noFollow]));
+            $manager = $metaTagManagerRegistry->getManagerForProperty('robots');
+            $manager->addProperty('robots', implode(',', [$noIndex, $noFollow]));
+        }
     }
 }
