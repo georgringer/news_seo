@@ -2,7 +2,8 @@
 
 This extension provides additional SEO features to EXT:news
 
-- Fields `no_index` & `no_seo`
+- Fields `no_index` & `no_seo` to control robot information per article and to override robot information of the page record
+- Set canonical tag even if `no_index` is set on page level
 
 ![Backend record](Resources/Public/Screeenshots/robots-instructions.png)
 

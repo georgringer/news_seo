@@ -12,3 +12,9 @@ services:
       - name: event.listener
         identifier: 'newsseo-newsdetailaction'
         event: GeorgRinger\News\Event\NewsDetailActionEvent
+
+  GeorgRinger\NewsSeo\EventListener\ModifyUrlForCanonicalTagEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'newsseo-newsdetailcanonicalaction'
+        event: TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent
