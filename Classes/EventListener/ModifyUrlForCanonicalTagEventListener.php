@@ -12,6 +12,7 @@ namespace GeorgRinger\NewsSeo\EventListener;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -36,7 +37,12 @@ class ModifyUrlForCanonicalTagEventListener
             return;
         }
 
-        if (!$this->getNewsId()) {
+        $newsId = $this->getNewsId();
+        if (!$newsId) {
+            return;
+        }
+
+        if ($this->isNoIndex($newsId)) {
             return;
         }
 
@@ -45,6 +51,21 @@ class ModifyUrlForCanonicalTagEventListener
         if (!empty($href)) {
             $event->setUrl($href);
         }
+    }
+
+    protected function isNoIndex(int $newsId): bool
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('tx_news_domain_model_news');
+        $row = $queryBuilder->select('uid', 'no_index')
+            ->from('tx_news_domain_model_news')
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($newsId, \PDO::PARAM_INT))
+            )
+            ->execute()
+            ->fetch();
+
+        return (bool)$row['no_index'];
     }
 
     protected function checkDefaultCanonical(): string
