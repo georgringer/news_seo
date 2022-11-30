@@ -24,9 +24,12 @@ use TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent;
 class ModifyUrlForCanonicalTagEventListener
 {
 
-    public function __construct(TypoScriptFrontendController $typoScriptFrontendController = null, EventDispatcherInterface $eventDispatcher = null)
+    protected TypoScriptFrontendController $typoScriptFrontendController;
+    protected PageRepository $pageRepository;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher = null)
     {
-        $this->typoScriptFrontendController = $typoScriptFrontendController ?? $this->getTypoScriptFrontendController();
+        $this->typoScriptFrontendController = $this->getTypoScriptFrontendController();
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
     }
 
@@ -134,6 +137,6 @@ class ModifyUrlForCanonicalTagEventListener
 
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController
     {
-        return $GLOBALS['TSFE'];
+        return $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.controller', $GLOBALS['TSFE']);
     }
 }
