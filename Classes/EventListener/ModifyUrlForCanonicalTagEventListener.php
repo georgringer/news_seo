@@ -87,6 +87,7 @@ class ModifyUrlForCanonicalTagEventListener
             'forceAbsoluteUrl' => true,
             'addQueryString' => true,
             'addQueryString.' => [
+                'method' => 'GET',
                 'exclude' => implode(
                     ',',
                     CanonicalizationUtility::getParamsToExcludeForCanonicalizedUrl(
