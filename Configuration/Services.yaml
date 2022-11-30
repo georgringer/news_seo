@@ -18,3 +18,10 @@ services:
       - name: event.listener
         identifier: 'newsseo-newsdetailcanonicalaction'
         event: TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent
+
+  GeorgRinger\NewsSeo\EventListener\ModifyHrefLangEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'ext-seonews/modify-hreflang'
+        after: 'ext-news/modify-hreflang'
+        event: TYPO3\CMS\Frontend\Event\ModifyHrefLangTagsEvent
