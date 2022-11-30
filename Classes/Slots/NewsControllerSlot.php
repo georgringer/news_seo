@@ -28,11 +28,15 @@ class NewsControllerSlot
         }
         /** @var News $news */
 
+        $robots = [
+            $news->isNoIndex() ? 'noindex' : 'index',
+            $news->isNoFollow() ? 'nofollow' : 'follow',
+            $news->getMaxImagePreviewString(),
+        ];
+        $robots = array_filter($robots);
         $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
-        $noIndex = $news->isNoIndex() ? 'noindex' : 'index';
-        $noFollow = $news->isNoFollow() ? 'nofollow' : 'follow';
 
         $manager = $metaTagManagerRegistry->getManagerForProperty('robots');
-        $manager->addProperty('robots', implode(',', [$noIndex, $noFollow]));
+        $manager->addProperty('robots', implode(',', $robots));
     }
 }

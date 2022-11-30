@@ -23,6 +23,9 @@ class News extends \GeorgRinger\News\Domain\Model\News
     /** @var bool */
     protected $noFollow = false;
 
+    /** @var int */
+    protected $maxImagePreview = 0;
+
     /**
      * @return bool
      */
@@ -56,6 +59,33 @@ class News extends \GeorgRinger\News\Domain\Model\News
     public function setNoFollow(bool $noFollow): News
     {
         $this->noFollow = $noFollow;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxImagePreview(): int
+    {
+        return $this->maxImagePreview;
+    }
+
+    public function getMaxImagePreviewString(): string
+    {
+        $mapping = [
+            1 => 'max-image-preview:standard',
+            2 => 'max-image-preview:large',
+        ];
+        return $mapping[$this->maxImagePreview] ?? '';
+    }
+
+    /**
+     * @param int $maxImagePreview
+     * @return News
+     */
+    public function setMaxImagePreview(int $maxImagePreview): News
+    {
+        $this->maxImagePreview = $maxImagePreview;
         return $this;
     }
 }
