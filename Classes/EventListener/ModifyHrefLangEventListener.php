@@ -11,6 +11,7 @@ namespace GeorgRinger\NewsSeo\EventListener;
  */
 
 use GeorgRinger\News\Seo\NewsAvailability;
+use GeorgRinger\NewsSeo\Utility\FetchUtility;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\LanguageAspectFactory;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
@@ -38,16 +39,19 @@ class ModifyHrefLangEventListener
         $this->cObj = $cObj;
         $this->languageMenuProcessor = $languageMenuProcessor;
     }
+
     public function __invoke(ModifyHrefLangTagsEvent $event): void
     {
         if ((int)$this->getTypoScriptFrontendController()->page['no_index'] === 0) {
             return;
         }
 
-
         $newsAvailabilityChecker = GeneralUtility::makeInstance(NewsAvailability::class);
-        if ($newsAvailabilityChecker->getNewsIdFromRequest() > 0) {
-
+        $newsId = $newsAvailabilityChecker->getNewsIdFromRequest();
+        if ($newsId > 0) {
+            if (FetchUtility::isNoIndex($newsId)) {
+                return;
+            }
             if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
                 $this->cObj->setRequest($event->getRequest());
             }
