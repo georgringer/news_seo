@@ -15,6 +15,7 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\LanguageAspectFactory;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Http\Uri;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -47,7 +48,9 @@ class ModifyHrefLangEventListener
         $newsAvailabilityChecker = GeneralUtility::makeInstance(NewsAvailability::class);
         if ($newsAvailabilityChecker->getNewsIdFromRequest() > 0) {
 
-            $this->cObj->setRequest($event->getRequest());
+            if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
+                $this->cObj->setRequest($event->getRequest());
+            }
             $languages = $this->languageMenuProcessor->process($this->cObj, [], [], []);
             $site = $this->getTypoScriptFrontendController()->getSite();
             $siteLanguage = $this->getTypoScriptFrontendController()->getLanguage();
