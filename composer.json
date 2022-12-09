@@ -14,7 +14,7 @@
     }
   ],
   "type": "typo3-cms-extension",
-  "description": "Additional SEO features for TYPO3 Extension news",
+  "description": "Indivdual indexing/robot information for each news article record",
   "license": [
     "GPL-2.0-or-later"
   ],

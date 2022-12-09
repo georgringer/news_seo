@@ -2,13 +2,13 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Additional SEO features for EXT:news',
-    'description' => '',
+    'description' => 'Indivdual indexing/robot information for each news article record',
     'category' => 'frontend',
     'author' => 'Georg Ringer',
     'author_email' => 'mail@ringer.it',
-    'state' => 'beta',
+    'state' => 'stable',
     'clearCacheOnLoad' => true,
-    'version' => '1.0.0',
+    'version' => '1.0.1',
     'constraints' =>
         [
             'depends' => [
