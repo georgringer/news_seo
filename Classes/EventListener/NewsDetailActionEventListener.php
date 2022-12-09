@@ -28,6 +28,10 @@ class NewsDetailActionEventListener
                 $news->isNoFollow() ? 'nofollow' : 'follow',
                 $news->getMaxImagePreviewString(),
             ];
+            if (!$news->isNoIndex()) {
+                $robots[] = $news->getMaxImagePreviewString();
+            }
+
             $robots = array_filter($robots);
             $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
 
