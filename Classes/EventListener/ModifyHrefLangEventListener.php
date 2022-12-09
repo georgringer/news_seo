@@ -12,11 +12,13 @@ namespace GeorgRinger\NewsSeo\EventListener;
 
 use GeorgRinger\News\Seo\NewsAvailability;
 use GeorgRinger\NewsSeo\Utility\FetchUtility;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\LanguageAspectFactory;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -47,7 +49,7 @@ class ModifyHrefLangEventListener
         }
 
         $newsAvailabilityChecker = GeneralUtility::makeInstance(NewsAvailability::class);
-        $newsId = $newsAvailabilityChecker->getNewsIdFromRequest();
+        $newsId = $this->getNewsIdFromRequest();
         if ($newsId > 0) {
             if (FetchUtility::isNoIndex($newsId)) {
                 return;
@@ -150,5 +152,22 @@ class ModifyHrefLangEventListener
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController
     {
         return $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.controller', $GLOBALS['TSFE']);
+    }
+
+    protected function getNewsIdFromRequest(): int
+    {
+        $newsId = 0;
+        /** @var PageArguments $pageArguments */
+        $pageArguments = $this->getRequest()->getAttribute('routing');
+        if (isset($pageArguments, $pageArguments->getRouteArguments()['tx_news_pi1']['news'])) {
+            $newsId = (int)$pageArguments->getRouteArguments()['tx_news_pi1']['news'];
+        } elseif (isset($this->getRequest()->getQueryParams()['tx_news_pi1']['news'])) {
+            $newsId = (int)$this->getRequest()->getQueryParams()['tx_news_pi1']['news'];
+        }
+        return $newsId;
+    }
+    protected function getRequest(): ServerRequestInterface
+    {
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 }
