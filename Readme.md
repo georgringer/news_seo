@@ -10,8 +10,9 @@ This extension provides additional SEO features to EXT:news
 
 ## Requirements
 
+- PHP 7.4+
 - TYPO3 10/11/12 with core extension "seo" installed
-- EXT:news 8.6/9/10/11
+- EXT:news 8.6/w9/10/11
 
 ## Installation
 

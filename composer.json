@@ -19,6 +19,7 @@
     "GPL-2.0-or-later"
   ],
   "require": {
+    "php": ">= 7.4 < 8.3",
     "georgringer/news": "^8.6 || ^9 || ^10",
     "typo3/cms-seo": "^10.4 || ^11.5 || ^12"
   },
