@@ -20,6 +20,9 @@
 			<trans-unit id="tx_news_domain_model_news.max_image_preview.large" resname="tx_news_domain_model_news.max_image_preview.large">
 				<source>large</source>
 			</trans-unit>
+			<trans-unit id="tx_news_domain_model_news.canonical_link" resname="tx_news_domain_model_news.canonical_link">
+				<source>Canonical Link</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

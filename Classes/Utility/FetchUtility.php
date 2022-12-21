@@ -32,4 +32,17 @@ class FetchUtility
         return (bool)$row['no_index'];
     }
 
+    public static function getRow(int $newsId): array
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('tx_news_domain_model_news');
+        return (array)$queryBuilder->select('uid', 'title', 'sys_language_uid', 'no_index', 'canonical_link')
+            ->from('tx_news_domain_model_news')
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($newsId, \PDO::PARAM_INT))
+            )
+            ->execute()
+            ->fetch();
+    }
+
 }

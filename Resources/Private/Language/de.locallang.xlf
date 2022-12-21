@@ -26,6 +26,10 @@
 				<source>large</source>
 				<target>groß</target>
 			</trans-unit>
+			<trans-unit id="tx_news_domain_model_news.canonical_link" resname="tx_news_domain_model_news.canonical_link">
+				<source>Canonical Link</source>
+				<target>Canonical Link</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -57,6 +57,25 @@
                 'default' => 0,
             ],
         ],
+        'canonical_link' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.canonical_link',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputLink',
+                'size' => 30,
+                'eval' => 'trim',
+                'softref' => 'typolink',
+                'fieldControl' => [
+                    'linkPopup' => [
+                        'options' => [
+                            'blindLinkOptions' => 'mail,folder,telephone',
+                            'blindLinkFields' => 'class, target, title',
+                        ],
+                    ],
+                ],
+            ]
+        ],
     ]
 );
 
@@ -67,7 +86,7 @@ $GLOBALS['TCA']['tx_news_domain_model_news']['palettes']['newsseoindex'] = [
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'tx_news_domain_model_news',
-    '--palette--;;newsseoindex,',
+    '--palette--;;newsseoindex,canonical_link',
     '',
     'after:sitemap_priority'
 );

@@ -45,15 +45,29 @@ class ModifyUrlForCanonicalTagEventListener
             return;
         }
 
-        if (FetchUtility::isNoIndex($newsId)) {
+        $row = FetchUtility::getRow($newsId);
+        if ($row['no_index'] ?? false) {
             return;
         }
 
-        $href = $this->checkDefaultCanonical();
+        if ($row['canonical_link'] ?? false) {
+            $href = $this->checkCanonicalLink($row['canonical_link']);
+        }
+
+        if (!$href) {
+            $href = $this->checkDefaultCanonical();
+        }
 
         if (!empty($href)) {
             $event->setUrl($href);
         }
+    }
+
+    protected function checkCanonicalLink(string $configuration): string
+    {
+        return $this->typoScriptFrontendController->cObj->typoLink_URL([
+            'parameter' => $configuration,
+            'forceAbsoluteUrl' => true]);
     }
 
     protected function checkDefaultCanonical(): string
