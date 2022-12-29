@@ -36,7 +36,7 @@ class ModifyUrlForCanonicalTagEventListener
     public function __invoke(ModifyUrlForCanonicalTagEvent $event): void
     {
         $href = $event->getUrl();
-        if (!empty($href) || (int)$this->typoScriptFrontendController->page['no_index'] === 0) {
+        if (!empty($href) {
             return;
         }
 
