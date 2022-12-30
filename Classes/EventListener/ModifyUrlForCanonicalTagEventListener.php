@@ -46,7 +46,7 @@ class ModifyUrlForCanonicalTagEventListener
         }
 
         $row = FetchUtility::getRow($newsId);
-        if ($row['no_index'] ?? false) {
+        if (!($row['robots_index'] ?? false)) {
             return;
         }
 

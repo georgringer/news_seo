@@ -3,32 +3,30 @@
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns(
     'tx_news_domain_model_news',
     [
-        'no_index' => [
+        'robots_index' => [
             'exclude' => true,
             'l10n_mode' => 'exclude',
-            'label' => 'LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.no_index',
+            'label' => 'LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.robots_index',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
                         0 => '',
-                        'invertStateDisplay' => true,
                     ],
                 ],
             ],
         ],
-        'no_follow' => [
+        'robots_follow' => [
             'exclude' => true,
             'l10n_mode' => 'exclude',
-            'label' => 'LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.no_follow',
+            'label' => 'LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.robots_follow',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
                         0 => '',
-                        'invertStateDisplay' => true,
                     ],
                 ],
             ],
@@ -54,7 +52,7 @@
                         2,
                     ],
                 ],
-                'default' => 0,
+                'default' => 1,
             ],
         ],
         'canonical_link' => [
@@ -81,7 +79,7 @@
 
 $GLOBALS['TCA']['tx_news_domain_model_news']['palettes']['newsseoindex'] = [
     'label' => 'LLL:EXT:seo/Resources/Private/Language/locallang_tca.xlf:pages.palettes.robots',
-    'showitem' => 'no_index,no_follow,max_image_preview',
+    'showitem' => 'robots_index,robots_follow,max_image_preview',
 ];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(

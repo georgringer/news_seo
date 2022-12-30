@@ -24,11 +24,11 @@ class NewsDetailActionEventListener
         $news = $event->getAssignedValues()['newsItem'];
         if ($news) {
             $robots = [
-                $news->isNoIndex() ? 'noindex' : 'index',
-                $news->isNoFollow() ? 'nofollow' : 'follow',
+                $news->isRobotsIndex() ? 'index' : 'noindex',
+                $news->isRobotsFollow() ? 'follow' : 'nofollow',
                 $news->getMaxImagePreviewString(),
             ];
-            if (!$news->isNoIndex()) {
+            if (!$news->isRobotsIndex()) {
                 $robots[] = $news->getMaxImagePreviewString();
             }
 
