@@ -36,7 +36,7 @@ class ModifyUrlForCanonicalTagEventListener
     public function __invoke(ModifyUrlForCanonicalTagEvent $event): void
     {
         $href = $event->getUrl();
-        if (!empty($href) {
+        if (!empty($href)) {
             return;
         }
 
