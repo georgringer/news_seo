@@ -9,12 +9,12 @@
             'label' => 'LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.robots_index',
             'config' => [
                 'type' => 'check',
-                'renderType' => 'checkboxToggle',
                 'items' => [
                     [
                         0 => '',
                     ],
                 ],
+                'default' => 1,
             ],
         ],
         'robots_follow' => [
@@ -23,12 +23,7 @@
             'label' => 'LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.robots_follow',
             'config' => [
                 'type' => 'check',
-                'renderType' => 'checkboxToggle',
-                'items' => [
-                    [
-                        0 => '',
-                    ],
-                ],
+                'default' => 1,
             ],
         ],
         'max_image_preview' => [
