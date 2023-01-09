@@ -2,10 +2,10 @@
 <xliff version="1.2" xmlns:t3="http://typo3.org/schemas/xliff" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 	<file source-language="en" original="" datatype="plaintext" date="2022-11-30T09:23:18+01:00">
 		<body>
-			<trans-unit id="tx_news_domain_model_news.no_index" resname="tx_news_domain_model_news.no_index">
+			<trans-unit id="tx_news_domain_model_news.robots_index" resname="tx_news_domain_model_news.robots_index">
 				<source>Index this article</source>
 			</trans-unit>
-			<trans-unit id="tx_news_domain_model_news.no_follow" resname="tx_news_domain_model_news.no_follow">
+			<trans-unit id="tx_news_domain_model_news.robots_follow" resname="tx_news_domain_model_news.robots_follow">
 				<source>Follow this article</source>
 			</trans-unit>
 			<trans-unit id="tx_news_domain_model_news.max_image_preview" resname="tx_news_domain_model_news.max_image_preview">

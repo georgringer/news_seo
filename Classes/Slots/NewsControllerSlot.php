@@ -29,10 +29,10 @@ class NewsControllerSlot
         /** @var News $news */
 
         $robots = [
-            $news->isNoIndex() ? 'noindex' : 'index',
-            $news->isNoFollow() ? 'nofollow' : 'follow',
+            $news->isRobotsIndex() ? 'index' : 'noindex',
+            $news->isRobotsFollow() ? 'follow' : 'nofollow',
         ];
-        if (!$news->isNoIndex()) {
+        if (!$news->isRobotsIndex()) {
             $robots[] = $news->getMaxImagePreviewString();
         }
 

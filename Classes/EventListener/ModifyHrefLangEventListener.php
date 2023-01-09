@@ -44,7 +44,7 @@ class ModifyHrefLangEventListener
 
     public function __invoke(ModifyHrefLangTagsEvent $event): void
     {
-        if ((int)$this->getTypoScriptFrontendController()->page['no_index'] === 0) {
+        if (!$this->getTypoScriptFrontendController()->page['robots_index']) {
             return;
         }
 

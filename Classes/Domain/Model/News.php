@@ -18,10 +18,10 @@ class News extends \GeorgRinger\News\Domain\Model\News
 {
 
     /** @var bool */
-    protected $noIndex = false;
+    protected $robotsIndex = false;
 
     /** @var bool */
-    protected $noFollow = false;
+    protected $robotsFollow = false;
 
     /** @var int */
     protected $maxImagePreview = 0;
@@ -29,36 +29,36 @@ class News extends \GeorgRinger\News\Domain\Model\News
     /**
      * @return bool
      */
-    public function isNoIndex(): bool
+    public function isRobotsIndex(): bool
     {
-        return $this->noIndex;
+        return $this->robotsIndex;
     }
 
     /**
-     * @param bool $noIndex
+     * @param bool $robotsIndex
      * @return News
      */
-    public function setNoIndex(bool $noIndex): News
+    public function setRobotsIndex(bool $robotsIndex): News
     {
-        $this->noIndex = $noIndex;
+        $this->robotsIndex = $robotsIndex;
         return $this;
     }
 
     /**
      * @return bool
      */
-    public function isNoFollow(): bool
+    public function isRobotsFollow(): bool
     {
-        return $this->noFollow;
+        return $this->robotsFollow;
     }
 
     /**
-     * @param bool $noFollow
+     * @param bool $robotsFollow
      * @return News
      */
-    public function setNoFollow(bool $noFollow): News
+    public function setRobotsFollow(bool $robotsFollow): News
     {
-        $this->noFollow = $noFollow;
+        $this->robotsFollow = $robotsFollow;
         return $this;
     }
 
