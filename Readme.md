@@ -29,7 +29,7 @@ Add the following snippet to your TypoScript
 plugin.tx_seo.config.xmlSitemap.sitemaps {
     # Important: the key might differ in your setup!
     news {
-        config.additionalWhere = {#type} NOT IN(1,2) AND {#no_index}=0
+        config.additionalWhere = {#type} NOT IN(1,2) AND {#robots_index}=1 AND {#canonical_link}=''
     }
 }
 ```
