@@ -29,7 +29,7 @@ class FetchUtility
             ->execute()
             ->fetch();
 
-        return !(bool)$row['robots_index'];
+        return !($row !== false && (bool)$row['robots_index']);
     }
 
     public static function getRow(int $newsId): array
