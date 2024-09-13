@@ -72,8 +72,10 @@ class ModifyUrlForCanonicalTagEventListener
 
     protected function checkDefaultCanonical(): string
     {
+       $pageId = $this->getPageId();
+
         // We should only create a canonical link to the target, if the target is within a valid site root
-        $inSiteRoot = $this->isPageWithinSiteRoot((int)$this->typoScriptFrontendController->id);
+        $inSiteRoot = $this->isPageWithinSiteRoot((int)$pageId);
         if (!$inSiteRoot) {
             return '';
         }
@@ -85,7 +87,7 @@ class ModifyUrlForCanonicalTagEventListener
         $this->typoScriptFrontendController->MP = '';
 
         $link = $this->typoScriptFrontendController->cObj->typoLink_URL([
-            'parameter' => $this->typoScriptFrontendController->id . ',' . $this->typoScriptFrontendController->type,
+            'parameter' => $pageId . ',' . $this->typoScriptFrontendController->type,
             'forceAbsoluteUrl' => true,
             'addQueryString' => true,
             'addQueryString.' => [
@@ -93,7 +95,7 @@ class ModifyUrlForCanonicalTagEventListener
                 'exclude' => implode(
                     ',',
                     CanonicalizationUtility::getParamsToExcludeForCanonicalizedUrl(
-                        (int)$this->typoScriptFrontendController->id,
+                        (int)$pageId,
                         (array)$GLOBALS['TYPO3_CONF_VARS']['FE']['additionalCanonicalizedUrlParameters']
                     )
                 ),
@@ -137,5 +139,10 @@ class ModifyUrlForCanonicalTagEventListener
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController
     {
         return $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.controller', $GLOBALS['TSFE']);
+    }
+
+    protected function getPageId()
+    {
+        return $this->getRequest()->getAttribute('routing')->getPageId();
     }
 }
