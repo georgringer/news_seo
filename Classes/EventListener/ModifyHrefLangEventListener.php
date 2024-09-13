@@ -58,6 +58,7 @@ class ModifyHrefLangEventListener
                 $this->cObj->setRequest($event->getRequest());
             }
             $languages = $this->languageMenuProcessor->process($this->cObj, [], [], []);
+            // @extensionScannerIgnoreLine
             $site = $this->getSite();
             $siteLanguage = $this->getSiteLanguage();
             $pageId = (int)$this->getPageId();

@@ -36,6 +36,7 @@ class NewsDetailActionEventListener
             $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
 
             $manager = $metaTagManagerRegistry->getManagerForProperty('robots');
+            // @extensionScannerIgnoreLine
             $manager->addProperty('robots', implode(',', $robots));
         }
     }

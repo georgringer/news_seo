@@ -73,6 +73,7 @@ class ModifyUrlForCanonicalTagEventListener
     protected function checkDefaultCanonical(): string
     {
        $pageId = $this->getPageId();
+       $pageType = $this->getPageType();
 
         // We should only create a canonical link to the target, if the target is within a valid site root
         $inSiteRoot = $this->isPageWithinSiteRoot((int)$pageId);
@@ -87,7 +88,7 @@ class ModifyUrlForCanonicalTagEventListener
         $this->typoScriptFrontendController->MP = '';
 
         $link = $this->typoScriptFrontendController->cObj->typoLink_URL([
-            'parameter' => $pageId . ',' . $this->typoScriptFrontendController->type,
+            'parameter' => $pageId . ',' . $pageType,
             'forceAbsoluteUrl' => true,
             'addQueryString' => true,
             'addQueryString.' => [
@@ -141,8 +142,11 @@ class ModifyUrlForCanonicalTagEventListener
         return $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.controller', $GLOBALS['TSFE']);
     }
 
-    protected function getPageId()
-    {
+    protected function getPageId() {
         return $this->getRequest()->getAttribute('routing')->getPageId();
+    }
+
+    protected function getPageType() {
+        return $this->getRequest()->getAttribute('routing')->getPageType();
     }
 }
