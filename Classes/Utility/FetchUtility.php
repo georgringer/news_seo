@@ -11,6 +11,7 @@ namespace GeorgRinger\NewsSeo\Utility;
  */
 
 
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -24,10 +25,10 @@ class FetchUtility
         $row = $queryBuilder->select('uid', 'robots_index')
             ->from('tx_news_domain_model_news')
             ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($newsId, \PDO::PARAM_INT))
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($newsId, Connection::PARAM_INT))
             )
-            ->execute()
-            ->fetch();
+            ->executeQuery()
+            ->fetchAssociative();
 
         return !($row !== false && (bool)$row['robots_index']);
     }
@@ -39,10 +40,10 @@ class FetchUtility
         return (array)$queryBuilder->select('uid', 'title', 'sys_language_uid', 'robots_index', 'canonical_link')
             ->from('tx_news_domain_model_news')
             ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($newsId, \PDO::PARAM_INT))
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($newsId, Connection::PARAM_INT))
             )
-            ->execute()
-            ->fetch();
+            ->executeQuery()
+            ->fetchAssociative();
     }
 
 }

@@ -58,9 +58,10 @@ class ModifyHrefLangEventListener
                 $this->cObj->setRequest($event->getRequest());
             }
             $languages = $this->languageMenuProcessor->process($this->cObj, [], [], []);
-            $site = $this->getTypoScriptFrontendController()->getSite();
-            $siteLanguage = $this->getTypoScriptFrontendController()->getLanguage();
-            $pageId = (int)$this->getTypoScriptFrontendController()->id;
+            // @extensionScannerIgnoreLine
+            $site = $this->getSite();
+            $siteLanguage = $this->getSiteLanguage();
+            $pageId = (int)$this->getPageId();
             $allHrefLangs = [];
             foreach ($languages['languagemenu'] as $language) {
                 if (!empty($language['link']) && $language['hreflang']) {
@@ -131,8 +132,9 @@ class ModifyHrefLangEventListener
     }
 
     /**
-     * @param string $url
+     * @param string       $url
      * @param SiteLanguage $siteLanguage
+     *
      * @return string
      */
     protected function getAbsoluteUrl(string $url, SiteLanguage $siteLanguage): string
@@ -166,8 +168,24 @@ class ModifyHrefLangEventListener
         }
         return $newsId;
     }
+
     protected function getRequest(): ServerRequestInterface
     {
         return $GLOBALS['TYPO3_REQUEST'];
+    }
+
+    protected function getPageId()
+    {
+        return $this->getRequest()->getAttribute('routing')->getPageId();
+    }
+
+    protected function getSite()
+    {
+        return $this->getRequest()->getAttribute('site');
+    }
+
+    protected function getSiteLanguage()
+    {
+        return $this->getRequest()->getAttribute('language');
     }
 }
