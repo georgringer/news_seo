@@ -44,14 +44,11 @@ class ModifyHrefLangEventListener
 
     public function __invoke(ModifyHrefLangTagsEvent $event): void
     {
-        if ($this->getTypoScriptFrontendController()->page['no_index']) {
-            return;
-        }
-
-        $newsAvailabilityChecker = GeneralUtility::makeInstance(NewsAvailability::class);
         $newsId = $this->getNewsIdFromRequest();
         if ($newsId > 0) {
             if (FetchUtility::isNoIndex($newsId)) {
+                //remove all previously generated page hreflangs if news article should not be indexed but page has no_index=0
+                $event->setHrefLangs([]);
                 return;
             }
             if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
@@ -97,6 +94,7 @@ class ModifyHrefLangEventListener
                 }
 
                 try {
+                    $newsAvailabilityChecker = GeneralUtility::makeInstance(NewsAvailability::class);
                     $check = $newsAvailabilityChecker->check($language['languageId']);
 
                     if (!$check) {
