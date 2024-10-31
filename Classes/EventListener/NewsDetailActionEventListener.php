@@ -22,7 +22,7 @@ class NewsDetailActionEventListener
     {
         /** @var News $news */
         $news = $event->getAssignedValues()['newsItem'];
-        if ($news) {
+        if (is_a($news, News::class) && $news) {
             $robots = [
                 $news->isRobotsIndex() ? 'index' : 'noindex',
                 $news->isRobotsFollow() ? 'follow' : 'nofollow',
