@@ -20,8 +20,8 @@
   ],
   "require": {
     "php": ">= 7.4 < 8.4",
-    "georgringer/news": "^8.6 || ^9 || ^10 || ^11 || ^12",
-    "typo3/cms-seo": "^10.4 || ^11.5 || ^12 || ^13"
+    "georgringer/news": "^10 || ^11 || ^12",
+    "typo3/cms-seo": "^12 || ^13"
   },
   "autoload": {
     "psr-4": {
