@@ -11,7 +11,7 @@ namespace GeorgRinger\NewsSeo\EventListener;
  */
 
 use GeorgRinger\News\Event\NewsDetailActionEvent;
-use GeorgRinger\NewsSeo\Domain\Model\News;
+use GeorgRinger\News\Domain\Model\News;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
