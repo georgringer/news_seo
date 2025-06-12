@@ -27,7 +27,7 @@ class ModifyUrlForCanonicalTagEventListener
     protected TypoScriptFrontendController $typoScriptFrontendController;
     protected PageRepository $pageRepository;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher = null)
+    public function __construct(?EventDispatcherInterface $eventDispatcher = null)
     {
         $this->typoScriptFrontendController = $this->getTypoScriptFrontendController();
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
