@@ -30,11 +30,8 @@ use TYPO3\CMS\Frontend\Event\ModifyHrefLangTagsEvent;
 class ModifyHrefLangEventListener
 {
 
-    /** @var ContentObjectRenderer */
-    public $cObj;
-
-    /** @var LanguageMenuProcessor */
-    protected $languageMenuProcessor;
+    public ContentObjectRenderer $cObj;
+    protected LanguageMenuProcessor $languageMenuProcessor;
 
     public function __construct(ContentObjectRenderer $cObj, LanguageMenuProcessor $languageMenuProcessor)
     {
