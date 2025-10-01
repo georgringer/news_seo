@@ -14,9 +14,11 @@ use GeorgRinger\NewsSeo\Utility\FetchUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Utility\CanonicalizationUtility;
 use TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent;
@@ -55,7 +57,10 @@ class ModifyUrlForCanonicalTagEventListener
         }
 
         if (!$href) {
-            $href = $this->checkDefaultCanonical();
+            $href = ((new Typo3Version())->getMajorVersion() >= 13)
+                ? $this->checkDefaultCanonical()
+                : $this->checkDefaultCanonical12()
+            ;
         }
 
         if (!empty($href)) {
@@ -70,7 +75,50 @@ class ModifyUrlForCanonicalTagEventListener
             'forceAbsoluteUrl' => true]);
     }
 
+
+    /**
+     * @see TYPO3\CMS\Seo\Canonical\CanonicalGenerator::checkDefaultCanonical()
+     */
     protected function checkDefaultCanonical(): string
+    {
+        $request = $this->getRequest();
+        $pageInformation = $request->getAttribute('frontend.page.information');
+        $id = $pageInformation->getId();
+        // We should only create a canonical link to the target, if the target is within a valid site root
+        $inSiteRoot = $this->isPageWithinSiteRoot($id);
+        if (!$inSiteRoot) {
+            return '';
+        }
+
+        // Temporarily remove current mount point information as we want to have the
+        // URL of the target page and not of the page within the mount point if the
+        // current page is a mount point.
+        $pageInformation = clone $pageInformation;
+        $pageInformation->setMountPoint('');
+        $request = $request->withAttribute('frontend.page.information', $pageInformation);
+        $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class, $request->getAttribute('frontend.controller'));
+        $cObj->setRequest($request);
+        $cObj->start($pageInformation->getPageRecord(), 'pages');
+        return $cObj->createUrl([
+            'parameter' => $id . ',' . $request->getAttribute('routing')->getPageType(),
+            'forceAbsoluteUrl' => true,
+            'addQueryString' => true,
+            'addQueryString.' => [
+                'exclude' => implode(
+                    ',',
+                    CanonicalizationUtility::getParamsToExcludeForCanonicalizedUrl(
+                        $id,
+                        (array)$GLOBALS['TYPO3_CONF_VARS']['FE']['additionalCanonicalizedUrlParameters']
+                    )
+                ),
+            ],
+        ]);
+    }
+
+    /**
+     * @todo Drop the method as soon as TYPO3 12 is no longer supported.
+     */
+    protected function checkDefaultCanonical12(): string
     {
        $pageId = $this->getPageId();
        $pageType = $this->getPageType();
