@@ -11,8 +11,8 @@ This extension provides additional SEO features to EXT:news
 
 ## Requirements
 
-- TYPO3 12/13 with core extension "seo" installed
-- EXT:news 10/11/12
+- TYPO3 13/14 with core extension "seo" installed
+- EXT:news 13/14
 
 ## Installation
 
