@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace GeorgRinger\NewsSeo\Tests\Functional\Domain\Model;
 
+use GeorgRinger\News\Domain\Model\News;
+use GeorgRinger\News\Domain\Model\NewsDefault;
 use GeorgRinger\News\Utility\ClassCacheManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -109,6 +111,59 @@ class NewsClassMergeTest extends FunctionalTestCase
         exec(sprintf('php -l %s 2>&1', escapeshellarg($file)), $output, $exitCode);
 
         self::assertSame(0, $exitCode, implode(LF, $output));
+    }
+
+    /**
+     * The regression guard for the DI trap.
+     *
+     * EXT:news registers its class loader in ext_localconf.php. Anything that
+     * makes Composer load GeorgRinger\News\Domain\Model\News before that point
+     * pins the unmerged class for the rest of the process, and every
+     * isRobotsIndex() call in the detail view fatals with "Call to undefined
+     * method".
+     *
+     * Symfony's container builder does exactly that when it reflects over a
+     * class extending the model, which is why Configuration/Services.yaml
+     * excludes Classes/Domain/Model/ from its resource glob. Remove the
+     * exclude and these two tests go red.
+     *
+     * @see \GeorgRinger\NewsSeo\Tests\Functional\Frontend\RobotsMetaTagTest
+     */
+    #[Test]
+    #[DataProvider('runtimeAccessorProvider')]
+    public function accessorIsAvailableOnTheRuntimeModel(string $className, string $method): void
+    {
+        self::assertTrue(
+            method_exists($className, $method),
+            sprintf(
+                '%s::%s() is missing - the EXT:news model was loaded by Composer before its own class loader was registered.',
+                $className,
+                $method
+            )
+        );
+    }
+
+    public static function runtimeAccessorProvider(): array
+    {
+        $cases = [];
+        // NewsDefault is what the frontend actually instantiates for type 0,
+        // and it only inherits the accessors through the merged News class.
+        foreach ([News::class, NewsDefault::class] as $className) {
+            foreach (['isRobotsIndex', 'isRobotsFollow', 'getMaxImagePreview', 'getMaxImagePreviewString'] as $method) {
+                $cases[$className . '::' . $method] = [$className, $method];
+            }
+        }
+
+        return $cases;
+    }
+
+    #[Test]
+    public function maxImagePreviewStringWorksOnTheRuntimeModel(): void
+    {
+        $news = new NewsDefault();
+        $news->setMaxImagePreview(2);
+
+        self::assertSame('max-image-preview:large', $news->getMaxImagePreviewString());
     }
 
     /**

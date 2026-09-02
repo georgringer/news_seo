@@ -1,7 +1,9 @@
 <?php
 
 declare(strict_types=1);
-$versionInformation = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+
+defined('TYPO3') or die();
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns(
     'tx_news_domain_model_news',
     [
@@ -30,11 +32,7 @@ $versionInformation = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items' => $versionInformation->getMajorVersion() < 12 ? [
-                    ['LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.max_image_preview.none', 0],
-                    ['LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.max_image_preview.standard', 1],
-                    ['LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.max_image_preview.large', 2],
-                ] : [
+                'items' => [
                     [
                         'label' => 'LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.max_image_preview.none',
                         'value' => 0,
@@ -54,21 +52,7 @@ $versionInformation = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO
         'canonical_link' => [
             'exclude' => true,
             'label' => 'LLL:EXT:news_seo/Resources/Private/Language/locallang.xlf:tx_news_domain_model_news.canonical_link',
-            'config' => $versionInformation->getMajorVersion() < 12 ? [
-                'type' => 'input',
-                'renderType' => 'inputLink',
-                'size' => 30,
-                'eval' => 'trim',
-                'softref' => 'typolink',
-                'fieldControl' => [
-                    'linkPopup' => [
-                        'options' => [
-                            'blindLinkOptions' => 'mail,folder,telephone',
-                            'blindLinkFields' => 'class, target, title',
-                        ],
-                    ],
-                ],
-            ] : [
+            'config' => [
                 'type' => 'link',
                 'size' => 30,
                 // allowed types tx_news: linkhandler must be set (typically called "tx_news" TCEMAIN.linkHandler.tx_news)

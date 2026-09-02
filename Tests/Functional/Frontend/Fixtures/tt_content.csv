@@ -1,0 +1,4 @@
+tt_content,,,,,,
+,uid,pid,sorting,colPos,CType,header
+,1,3,256,0,"news_newsdetail","Detail Plugin"
+,2,4,256,0,"news_newsdetail","Detail Plugin on the noindex page"
