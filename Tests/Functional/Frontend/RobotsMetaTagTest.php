@@ -32,6 +32,10 @@ class RobotsMetaTagTest extends AbstractFrontendTestCase
             'excluded from the index' => [2, 'noindex,nofollow'],
             'large image preview' => [3, 'index,follow,max-image-preview:large'],
             'indexed, not followed, standard preview' => [4, 'index,nofollow,max-image-preview:standard'],
+            // max-image-preview says how an image may be shown, not whether
+            // the page is indexed, so it has to come through on a noindex
+            // article too - and only once. See issue #41.
+            'excluded from the index, large preview' => [13, 'noindex,nofollow,max-image-preview:large'],
         ];
     }
 

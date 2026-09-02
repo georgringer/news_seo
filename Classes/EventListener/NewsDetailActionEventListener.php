@@ -28,9 +28,6 @@ class NewsDetailActionEventListener
                 $news->isRobotsFollow() ? 'follow' : 'nofollow',
                 $news->getMaxImagePreviewString(),
             ];
-            if (!$news->isRobotsIndex()) {
-                $robots[] = $news->getMaxImagePreviewString();
-            }
 
             $robots = array_filter($robots);
             $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
