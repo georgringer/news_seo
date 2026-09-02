@@ -1,7 +1,15 @@
-tx_news_domain_model_news,,,,,,,,,,
-,uid,pid,type,title,teaser,bodytext,robots_index,robots_follow,max_image_preview,canonical_link
-,1,2,0,"Indexed article","Teaser one","Bodytext one",1,1,0,""
-,2,2,0,"Article excluded from the index","Teaser two","Bodytext two",0,0,0,""
-,3,2,0,"Indexed article with a large preview","Teaser three","Bodytext three",1,1,2,""
-,4,2,0,"Indexed but not followed","Teaser four","Bodytext four",1,0,1,""
-,5,2,0,"Article with an explicit canonical","Teaser five","Bodytext five",1,1,0,"t3://page?uid=2"
+tx_news_domain_model_news,,,,,,,,,,,,
+,uid,pid,type,title,teaser,bodytext,robots_index,robots_follow,max_image_preview,canonical_link,sys_language_uid,l10n_parent
+,1,2,0,"Indexed article","Teaser one","Bodytext one",1,1,0,"",0,0
+,2,2,0,"Article excluded from the index","Teaser two","Bodytext two",0,0,0,"",0,0
+,3,2,0,"Indexed article with a large preview","Teaser three","Bodytext three",1,1,2,"",0,0
+,4,2,0,"Indexed but not followed","Teaser four","Bodytext four",1,0,1,"",0,0
+,5,2,0,"Article with an explicit canonical","Teaser five","Bodytext five",1,1,0,"t3://page?uid=2",0,0
+,10,2,0,"Article translated into every language","Teaser ten","Bodytext ten",1,1,0,"",0,0
+,11,2,0,"Article translated into German only","Teaser eleven","Bodytext eleven",1,1,0,"",0,0
+,12,2,0,"Translated article excluded from the index","Teaser twelve","Bodytext twelve",0,0,0,"",0,0
+,110,2,0,"Artikel in allen Sprachen","Teaser zehn","Bodytext zehn",1,1,0,"",1,10
+,120,2,0,"Article traduit dans toutes les langues","Teaser dix","Bodytext dix",1,1,0,"",2,10
+,111,2,0,"Artikel nur auf Deutsch","Teaser elf","Bodytext elf",1,1,0,"",1,11
+,112,2,0,"Nicht indexierter Artikel","Teaser zwoelf","Bodytext zwoelf",0,0,0,"",1,12
+,122,2,0,"Article non indexe","Teaser douze","Bodytext douze",0,0,0,"",2,12

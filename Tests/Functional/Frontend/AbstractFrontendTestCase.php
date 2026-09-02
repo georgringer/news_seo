@@ -36,6 +36,9 @@ abstract class AbstractFrontendTestCase extends FunctionalTestCase
 
     protected const NOINDEX_DETAIL_PAGE_ID = 4;
 
+    /** Its French translation carries a canonical_link. */
+    protected const CANONICAL_DETAIL_PAGE_ID = 5;
+
     /**
      * fluid_styled_content is needed because Extbase registers the TypoScript
      * for tt_content.news_* through "defaultContentRendering", which is only
@@ -103,6 +106,20 @@ abstract class AbstractFrontendTestCase extends FunctionalTestCase
         return $this->assertRendersWithoutError($response);
     }
 
+    /**
+     * Same, but for a request that has to resolve through a site language
+     * base - the only way to reach a translation, since the legacy "L"
+     * parameter no longer selects a language.
+     */
+    protected function renderDetailAtUrl(string $uri, int $newsId): string
+    {
+        $response = $this->executeFrontendSubRequest(
+            (new InternalRequest($uri))->withQueryParameters(['tx_news_pi1[news]' => $newsId])
+        );
+
+        return $this->assertRendersWithoutError($response);
+    }
+
     protected function assertRendersWithoutError(ResponseInterface $response): string
     {
         self::assertSame(200, $response->getStatusCode());
@@ -143,7 +160,27 @@ abstract class AbstractFrontendTestCase extends FunctionalTestCase
         return $matches[1];
     }
 
-    private function writeSiteConfiguration(): void
+    /**
+     * @return array<string, string> hreflang => href, in document order
+     */
+    protected function extractHrefLangTags(string $html): array
+    {
+        preg_match_all(
+            '#<link[^>]+rel="alternate"[^>]+hreflang="([^"]*)"[^>]+href="([^"]*)"#i',
+            $html,
+            $matches,
+            PREG_SET_ORDER
+        );
+
+        $tags = [];
+        foreach ($matches as $match) {
+            $tags[$match[1]] = $match[2];
+        }
+
+        return $tags;
+    }
+
+    protected function writeSiteConfiguration(): void
     {
         $path = $this->instancePath . '/typo3conf/sites/testing';
         GeneralUtility::mkdir_deep($path);
@@ -151,17 +188,55 @@ abstract class AbstractFrontendTestCase extends FunctionalTestCase
         file_put_contents($path . '/config.yaml', Yaml::dump([
             'rootPageId' => self::ROOT_PAGE_ID,
             'base' => 'http://localhost/',
-            'languages' => [
-                [
-                    'title' => 'English',
-                    'enabled' => true,
-                    'languageId' => 0,
-                    'base' => '/',
-                    'locale' => 'en_US.UTF-8',
-                    'navigationTitle' => 'English',
-                    'flag' => 'us',
-                ],
-            ],
+            'languages' => $this->siteLanguages(),
         ], 99, 2));
+    }
+
+    /**
+     * Path-based languages on a single host. Overridden by the test that
+     * covers host-based ones.
+     *
+     * Both translations use fallbackType "strict" on purpose: that is the
+     * only mode in which EXT:news' NewsAvailability drops a language, and
+     * news_seo runs the same check afterwards.
+     *
+     * @return list<array<string, mixed>>
+     */
+    protected function siteLanguages(): array
+    {
+        return [
+            [
+                'title' => 'English',
+                'enabled' => true,
+                'languageId' => 0,
+                'base' => '/',
+                'locale' => 'en_US.UTF-8',
+                'hreflang' => 'en-US',
+                'navigationTitle' => 'English',
+                'flag' => 'us',
+            ],
+            [
+                'title' => 'German',
+                'enabled' => true,
+                'languageId' => 1,
+                'base' => '/de/',
+                'locale' => 'de_DE.UTF-8',
+                'hreflang' => 'de-DE',
+                'navigationTitle' => 'Deutsch',
+                'flag' => 'de',
+                'fallbackType' => 'strict',
+            ],
+            [
+                'title' => 'French',
+                'enabled' => true,
+                'languageId' => 2,
+                'base' => '/fr/',
+                'locale' => 'fr_FR.UTF-8',
+                'hreflang' => 'fr-FR',
+                'navigationTitle' => 'Francais',
+                'flag' => 'fr',
+                'fallbackType' => 'strict',
+            ],
+        ];
     }
 }

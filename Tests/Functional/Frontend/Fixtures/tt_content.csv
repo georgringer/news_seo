@@ -1,4 +1,9 @@
-tt_content,,,,,,
-,uid,pid,sorting,colPos,CType,header
-,1,3,256,0,"news_newsdetail","Detail Plugin"
-,2,4,256,0,"news_newsdetail","Detail Plugin on the noindex page"
+tt_content,,,,,,,,
+,uid,pid,sorting,colPos,CType,header,sys_language_uid,l18n_parent
+,1,3,256,0,"news_newsdetail","Detail Plugin",0,0
+,2,4,256,0,"news_newsdetail","Detail Plugin on the noindex page",0,0
+,3,5,256,0,"news_newsdetail","Detail Plugin on the page with a French canonical",0,0
+,101,3,256,0,"news_newsdetail","Detail Plugin DE",1,1
+,103,5,256,0,"news_newsdetail","Detail Plugin DE",1,3
+,201,3,256,0,"news_newsdetail","Detail Plugin FR",2,1
+,203,5,256,0,"news_newsdetail","Detail Plugin FR",2,3
