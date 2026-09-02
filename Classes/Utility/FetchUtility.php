@@ -39,12 +39,12 @@ class FetchUtility
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tx_news_domain_model_news');
-        return (array)$queryBuilder->select('uid', 'title', 'sys_language_uid', 'robots_index', 'canonical_link')
+        return $queryBuilder->select('uid', 'title', 'sys_language_uid', 'robots_index', 'canonical_link')
             ->from('tx_news_domain_model_news')
             ->where(
                 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($newsId, Connection::PARAM_INT))
             )
             ->executeQuery()
-            ->fetchAssociative();
+            ->fetchAssociative() ?: [];
     }
 }

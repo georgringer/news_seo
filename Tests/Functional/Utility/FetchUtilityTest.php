@@ -70,10 +70,19 @@ class FetchUtilityTest extends FunctionalTestCase
     }
 
     /**
-     * An unknown uid makes fetchAssociative() return false, which the (array)
-     * cast in getRow() turns into [0 => false] rather than []. Both listeners
-     * cope because they read the columns with "?? false", and that is what is
-     * pinned here: an unknown record yields no usable SEO data.
+     * An unknown uid makes fetchAssociative() return false. The method
+     * promises an array, and an empty one is the only honest answer - callers
+     * have to be able to use empty() or count() on the result. See issue #43.
+     */
+    #[Test]
+    public function getRowReturnsAnEmptyArrayForAnUnknownRecord(): void
+    {
+        self::assertSame([], FetchUtility::getRow(99));
+    }
+
+    /**
+     * The two listeners read the columns defensively, so the shape of the
+     * result must not offer anything that looks like SEO data either.
      */
     #[Test]
     public function getRowCarriesNoSeoDataForAnUnknownRecord(): void
