@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsSeo\Utility;
@@ -10,14 +11,12 @@ namespace GeorgRinger\NewsSeo\Utility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class FetchUtility
 {
-
     public static function isNoIndex(int $newsId): bool
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)

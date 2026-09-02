@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsSeo\EventListener;
@@ -23,7 +24,6 @@ use TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent;
 
 class ModifyUrlForCanonicalTagEventListener
 {
-
     protected PageRepository $pageRepository;
 
     public function __construct(?EventDispatcherInterface $eventDispatcher = null)

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsSeo\EventListener;
@@ -29,7 +30,6 @@ use TYPO3\CMS\Frontend\Event\ModifyHrefLangTagsEvent;
 
 class ModifyHrefLangEventListener
 {
-
     public ContentObjectRenderer $cObj;
     protected LanguageMenuProcessor $languageMenuProcessor;
 
@@ -79,7 +79,6 @@ class ModifyHrefLangEventListener
                     $allHrefLangs['x-default'] = $allHrefLangs[$languages['languagemenu'][0]['hreflang']];
                 }
             }
-
 
             $languages = $this->languageMenuProcessor->process($this->cObj, [], [], []);
             $errorTriggered = false;

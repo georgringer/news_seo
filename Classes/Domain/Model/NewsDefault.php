@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsSeo\Domain\Model;
@@ -10,13 +11,11 @@ namespace GeorgRinger\NewsSeo\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-
 /**
  * Persist dynamic data of import
  */
 class NewsDefault extends \GeorgRinger\News\Domain\Model\NewsDefault
 {
-
     /** @var bool */
     protected $robotsIndex = false;
 
