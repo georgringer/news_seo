@@ -57,6 +57,11 @@ class NewsDetailActionEventListenerTest extends FunctionalTestCase
             'indexed with a large preview' => [true, true, 2, 'index,follow,max-image-preview:large'],
             'indexed but not followed' => [true, false, 0, 'index,nofollow'],
             'excluded from the index' => [false, false, 0, 'noindex,nofollow'],
+            // The image preview directive is independent of indexing, so it
+            // has to survive a noindex - exactly once. See issue #41.
+            'excluded with a standard preview' => [false, false, 1, 'noindex,nofollow,max-image-preview:standard'],
+            'excluded with a large preview' => [false, false, 2, 'noindex,nofollow,max-image-preview:large'],
+            'excluded but followed, with a preview' => [false, true, 2, 'noindex,follow,max-image-preview:large'],
         ];
     }
 

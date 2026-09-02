@@ -8,6 +8,7 @@ tx_news_domain_model_news,,,,,,,,,,,,
 ,10,2,0,"Article translated into every language","Teaser ten","Bodytext ten",1,1,0,"",0,0
 ,11,2,0,"Article translated into German only","Teaser eleven","Bodytext eleven",1,1,0,"",0,0
 ,12,2,0,"Translated article excluded from the index","Teaser twelve","Bodytext twelve",0,0,0,"",0,0
+,13,2,0,"Excluded from the index but asking for a large preview","Teaser thirteen","Bodytext thirteen",0,0,2,"",0,0
 ,110,2,0,"Artikel in allen Sprachen","Teaser zehn","Bodytext zehn",1,1,0,"",1,10
 ,120,2,0,"Article traduit dans toutes les langues","Teaser dix","Bodytext dix",1,1,0,"",2,10
 ,111,2,0,"Artikel nur auf Deutsch","Teaser elf","Bodytext elf",1,1,0,"",1,11
