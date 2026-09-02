@@ -59,4 +59,29 @@ class RobotsMetaTagTest extends AbstractFrontendTestCase
 
         self::assertSame(['noindex,nofollow'], $this->extractMetaTag($html, 'robots'));
     }
+
+    /**
+     * robots_index, robots_follow and max_image_preview carry
+     * l10n_mode => exclude, and FetchUtility always reads the uid that is in
+     * the request - the default language record. A translation therefore
+     * cannot drift away from the original.
+     */
+    #[Test]
+    #[DataProvider('translatedArticleProvider')]
+    public function robotsFlagsAreNotTranslatable(string $uri, int $newsId, string $expected): void
+    {
+        $html = $this->renderDetailAtUrl($uri, $newsId);
+
+        self::assertSame([$expected], $this->extractMetaTag($html, 'robots'));
+    }
+
+    public static function translatedArticleProvider(): array
+    {
+        return [
+            'indexed article in German' => ['http://localhost/de/detail', 10, 'index,follow'],
+            'indexed article in French' => ['http://localhost/fr/detail', 10, 'index,follow'],
+            'excluded article in German' => ['http://localhost/de/detail', 12, 'noindex,nofollow'],
+            'excluded article in French' => ['http://localhost/fr/detail', 12, 'noindex,nofollow'],
+        ];
+    }
 }

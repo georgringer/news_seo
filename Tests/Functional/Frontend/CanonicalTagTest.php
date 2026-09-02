@@ -11,6 +11,7 @@ namespace GeorgRinger\NewsSeo\Tests\Functional\Frontend;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 class CanonicalTagTest extends AbstractFrontendTestCase
@@ -72,5 +73,27 @@ class CanonicalTagTest extends AbstractFrontendTestCase
         $html = $this->renderDetail(2);
 
         self::assertSame(['http://localhost/detail'], $this->extractLinkTag($html, 'canonical'));
+    }
+
+    /**
+     * Unlike the hreflang set, the canonical is about the page in front of
+     * the visitor and has to follow the rendered language.
+     */
+    #[Test]
+    #[DataProvider('renderingLanguageProvider')]
+    public function canonicalFollowsTheRenderedLanguage(string $uri): void
+    {
+        $html = $this->renderDetailAtUrl($uri, 10);
+
+        self::assertSame([$uri], $this->extractLinkTag($html, 'canonical'));
+    }
+
+    public static function renderingLanguageProvider(): array
+    {
+        return [
+            'rendered in English' => ['http://localhost/detail'],
+            'rendered in German' => ['http://localhost/de/detail'],
+            'rendered in French' => ['http://localhost/fr/detail'],
+        ];
     }
 }
