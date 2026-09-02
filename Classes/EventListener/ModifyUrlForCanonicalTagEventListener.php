@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsSeo\EventListener;
@@ -23,7 +24,6 @@ use TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent;
 
 class ModifyUrlForCanonicalTagEventListener
 {
-
     protected PageRepository $pageRepository;
 
     public function __construct(?EventDispatcherInterface $eventDispatcher = null)
@@ -36,7 +36,7 @@ class ModifyUrlForCanonicalTagEventListener
         $href = $event->getUrl();
 
         $newsId = $this->getNewsId();
-        if (!$newsId) {
+        if ($newsId === 0) {
             return;
         }
 
@@ -60,9 +60,8 @@ class ModifyUrlForCanonicalTagEventListener
 
     protected function checkCanonicalLink(ServerRequestInterface $request, string $configuration): string
     {
-        $typoScriptFrontendController = $request->getAttribute('frontend.controller');
         $pageRecord = $request->getAttribute('frontend.page.information')->getPageRecord();
-        $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class, $typoScriptFrontendController);
+        $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $cObj->setRequest($request);
         $cObj->start($pageRecord, 'pages');
         return $cObj->createUrl([
@@ -91,7 +90,7 @@ class ModifyUrlForCanonicalTagEventListener
         $pageInformation = clone $pageInformation;
         $pageInformation->setMountPoint('');
         $request = $request->withAttribute('frontend.page.information', $pageInformation);
-        $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class, $request->getAttribute('frontend.controller'));
+        $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $cObj->setRequest($request);
         $cObj->start($pageInformation->getPageRecord(), 'pages');
         return $cObj->createUrl([

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsSeo\EventListener;
@@ -17,19 +18,16 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\LanguageAspectFactory;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Http\Uri;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\DataProcessing\LanguageMenuProcessor;
 use TYPO3\CMS\Frontend\Event\ModifyHrefLangTagsEvent;
 
 class ModifyHrefLangEventListener
 {
-
     public ContentObjectRenderer $cObj;
     protected LanguageMenuProcessor $languageMenuProcessor;
 
@@ -44,13 +42,11 @@ class ModifyHrefLangEventListener
         $newsId = $this->getNewsIdFromRequest();
         if ($newsId > 0) {
             if (FetchUtility::isNoIndex($newsId)) {
-                //remove all previously generated page hreflangs if news article should not be indexed but page has no_index=0
+                // remove all previously generated page hreflangs if news article should not be indexed but page has no_index=0
                 $event->setHrefLangs([]);
                 return;
             }
-            if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
-                $this->cObj->setRequest($event->getRequest());
-            }
+            $this->cObj->setRequest($event->getRequest());
             $languages = $this->languageMenuProcessor->process($this->cObj, [], [], []);
             // @extensionScannerIgnoreLine
             $site = $this->getSite();
@@ -79,7 +75,6 @@ class ModifyHrefLangEventListener
                     $allHrefLangs['x-default'] = $allHrefLangs[$languages['languagemenu'][0]['hreflang']];
                 }
             }
-
 
             $languages = $this->languageMenuProcessor->process($this->cObj, [], [], []);
             $errorTriggered = false;
@@ -126,12 +121,6 @@ class ModifyHrefLangEventListener
         return $pageRepository->getPage($pageId);
     }
 
-    /**
-     * @param string       $url
-     * @param SiteLanguage $siteLanguage
-     *
-     * @return string
-     */
     protected function getAbsoluteUrl(string $url, SiteLanguage $siteLanguage): string
     {
         $uri = new Uri($url);
@@ -144,11 +133,6 @@ class ModifyHrefLangEventListener
         }
 
         return (string)$url;
-    }
-
-    protected function getTypoScriptFrontendController(): TypoScriptFrontendController
-    {
-        return $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.controller', $GLOBALS['TSFE']);
     }
 
     protected function getNewsIdFromRequest(): int

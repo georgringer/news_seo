@@ -1,27 +1,27 @@
 services:
-  _defaults:
-    autowire: true
-    autoconfigure: true
-    public: false
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
 
-  GeorgRinger\NewsSeo\:
-    resource: '../Classes/*'
+    GeorgRinger\NewsSeo\:
+        resource: '../Classes/*'
 
-  GeorgRinger\NewsSeo\EventListener\NewsDetailActionEventListener:
-    tags:
-      - name: event.listener
-        identifier: 'newsseo-newsdetailaction'
-        event: GeorgRinger\News\Event\NewsDetailActionEvent
+    GeorgRinger\NewsSeo\EventListener\NewsDetailActionEventListener:
+        tags:
+            - name: event.listener
+              identifier: 'newsseo-newsdetailaction'
+              event: GeorgRinger\News\Event\NewsDetailActionEvent
 
-  GeorgRinger\NewsSeo\EventListener\ModifyUrlForCanonicalTagEventListener:
-    tags:
-      - name: event.listener
-        identifier: 'newsseo-newsdetailcanonicalaction'
-        event: TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent
+    GeorgRinger\NewsSeo\EventListener\ModifyUrlForCanonicalTagEventListener:
+        tags:
+            - name: event.listener
+              identifier: 'newsseo-newsdetailcanonicalaction'
+              event: TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent
 
-  GeorgRinger\NewsSeo\EventListener\ModifyHrefLangEventListener:
-    tags:
-      - name: event.listener
-        identifier: 'ext-seonews/modify-hreflang'
-        after: 'ext-news/modify-hreflang'
-        event: TYPO3\CMS\Frontend\Event\ModifyHrefLangTagsEvent
+    GeorgRinger\NewsSeo\EventListener\ModifyHrefLangEventListener:
+        tags:
+            - name: event.listener
+              identifier: 'ext-seonews/modify-hreflang'
+              after: 'ext-news/modify-hreflang'
+              event: TYPO3\CMS\Frontend\Event\ModifyHrefLangTagsEvent

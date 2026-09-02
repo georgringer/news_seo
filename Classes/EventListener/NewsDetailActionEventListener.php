@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace GeorgRinger\NewsSeo\EventListener;
@@ -10,19 +11,18 @@ namespace GeorgRinger\NewsSeo\EventListener;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use GeorgRinger\News\Event\NewsDetailActionEvent;
 use GeorgRinger\News\Domain\Model\News;
+use GeorgRinger\News\Event\NewsDetailActionEvent;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class NewsDetailActionEventListener
 {
-
     public function __invoke(NewsDetailActionEvent $event): void
     {
-        /** @var News $news */
+        /** @var \GeorgRinger\NewsSeo\Domain\Model\News $news */
         $news = $event->getAssignedValues()['newsItem'];
-        if (is_a($news, News::class) && $news) {
+        if (is_a($news, News::class)) {
             $robots = [
                 $news->isRobotsIndex() ? 'index' : 'noindex',
                 $news->isRobotsFollow() ? 'follow' : 'nofollow',
