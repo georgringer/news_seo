@@ -1,1 +1,17 @@
+/.Build
+/.cache
+/composer.lock
+/composer.json.orig
+/composer.json.testing
+/.php_cs.cache
+/.php-cs-fixer.cache
+/typo3temp/
+/var/
+.phpunit.cache
 .DS_Store
+.idea/
+.fleet/
+
+# Ignore AI tool-generated files
+/CLAUDE.local.md
+/.claude/settings.local.json

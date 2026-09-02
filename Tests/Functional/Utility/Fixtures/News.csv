@@ -1,0 +1,5 @@
+"tx_news_domain_model_news",,,,,,
+,"uid","pid","sys_language_uid","title","robots_index","canonical_link"
+,1,1,0,"Indexed article",1,""
+,2,1,0,"Article excluded from the index",0,""
+,3,1,0,"Article with an explicit canonical",1,"t3://page?uid=42"
