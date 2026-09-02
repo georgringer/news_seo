@@ -1,0 +1,7 @@
+tx_news_domain_model_news,,,,,,,,,,
+,uid,pid,type,title,teaser,bodytext,robots_index,robots_follow,max_image_preview,canonical_link
+,1,2,0,"Indexed article","Teaser one","Bodytext one",1,1,0,""
+,2,2,0,"Article excluded from the index","Teaser two","Bodytext two",0,0,0,""
+,3,2,0,"Indexed article with a large preview","Teaser three","Bodytext three",1,1,2,""
+,4,2,0,"Indexed but not followed","Teaser four","Bodytext four",1,0,1,""
+,5,2,0,"Article with an explicit canonical","Teaser five","Bodytext five",1,1,0,"t3://page?uid=2"

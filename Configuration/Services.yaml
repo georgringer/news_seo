@@ -6,6 +6,14 @@ services:
 
     GeorgRinger\NewsSeo\:
         resource: '../Classes/*'
+        # Domain/Model holds the partial class bodies that the ClassCacheManager
+        # of EXT:news concatenates into GeorgRinger\News\Domain\Model\News. They
+        # are not services, and letting Symfony reflect over them loads the
+        # EXT:news model through Composer while the container is being built -
+        # before EXT:news can register its own class loader in ext_localconf.php.
+        # The model then stays unmerged for the rest of the process and every
+        # isRobotsIndex() call fatals.
+        exclude: '../Classes/Domain/Model/*'
 
     GeorgRinger\NewsSeo\EventListener\NewsDetailActionEventListener:
         tags:

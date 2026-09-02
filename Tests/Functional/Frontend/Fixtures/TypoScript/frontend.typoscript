@@ -1,0 +1,30 @@
+page = PAGE
+
+# The plugin records are rendered directly instead of going through
+# styles.content.get - that keeps the output small and the assertions robust.
+page.10 = CONTENT
+page.10 {
+  table = tt_content
+  select {
+    orderBy = sorting
+    where = {#colPos}=0
+  }
+}
+
+# Without this TYPO3 swallows per content element errors, returns
+# "Oops, an error occurred" and status 200 - tests would be green by mistake.
+config.contentObjectExceptionHandler = 0
+config.no_cache = 1
+
+# Deliberately NOT disableAllHeaderCode: every assertion in this directory is
+# about a tag in <head>.
+
+plugin.tx_news {
+  persistence.storagePid = 2
+  settings {
+    listPid = 2
+    defaultDetailPid = 3
+    detailPid = 3
+    backPid = 2
+  }
+}

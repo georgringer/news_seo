@@ -1,0 +1,6 @@
+pages,,,,,,,
+,uid,pid,sorting,doktype,slug,title,no_index,no_follow
+,1,0,256,1,"/","Root",0,0
+,2,1,256,1,"/list","List",0,0
+,3,1,512,1,"/detail","Detail",0,0
+,4,1,768,1,"/detail-noindex","Detail on a page excluded from the index",1,1
