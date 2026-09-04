@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 // @phpstan-ignore variable.implicitArray
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Additional SEO features for EXT:news',
