@@ -17,13 +17,13 @@ namespace GeorgRinger\NewsSeo\Domain\Model;
 class News extends \GeorgRinger\News\Domain\Model\News
 {
     /** @var bool */
-    protected $robotsIndex = false;
+    protected $robotsIndex = true;
 
     /** @var bool */
-    protected $robotsFollow = false;
+    protected $robotsFollow = true;
 
     /** @var int */
-    protected $maxImagePreview = 0;
+    protected $maxImagePreview = 1;
 
     public function isRobotsIndex(): bool
     {
