@@ -25,28 +25,33 @@ class NewsTest extends UnitTestCase
         $this->subject = new News();
     }
 
+    /**
+     * Extbase persists every property of a new object, so these defaults end
+     * up in the database whenever a record is created through the model,
+     * e.g. by the news import. They must match the TCA defaults.
+     */
     #[Test]
-    public function robotsAreNotIndexedByDefault(): void
+    public function defaultsMatchTheTcaDefaults(): void
     {
-        self::assertFalse($this->subject->isRobotsIndex());
-        self::assertFalse($this->subject->isRobotsFollow());
-        self::assertSame(0, $this->subject->getMaxImagePreview());
+        self::assertTrue($this->subject->isRobotsIndex());
+        self::assertTrue($this->subject->isRobotsFollow());
+        self::assertSame(1, $this->subject->getMaxImagePreview());
     }
 
     #[Test]
     public function setRobotsIndex(): void
     {
-        $this->subject->setRobotsIndex(true);
+        $this->subject->setRobotsIndex(false);
 
-        self::assertTrue($this->subject->isRobotsIndex());
+        self::assertFalse($this->subject->isRobotsIndex());
     }
 
     #[Test]
     public function setRobotsFollow(): void
     {
-        $this->subject->setRobotsFollow(true);
+        $this->subject->setRobotsFollow(false);
 
-        self::assertTrue($this->subject->isRobotsFollow());
+        self::assertFalse($this->subject->isRobotsFollow());
     }
 
     #[Test]
